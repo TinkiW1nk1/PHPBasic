@@ -14,7 +14,7 @@ print_r($arr);
 echo "<br>";
 
 echo 'получить сумму 4,5,6 элемента' . "<br>";
-$countArr = array_slice($arr, 4,3);
+$countArr = array_slice($arr, 3,3);
 print_r(array_sum($countArr));
 echo "<br>";
 
