@@ -6,3 +6,4 @@ function debug($arr){
 }
 
 debug($_POST);
+debug($_FILES);

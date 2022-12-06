@@ -13,7 +13,7 @@
 <body>
 <h4><p>1. Написать HTML форму. Поля должны быть различных типов которые мы разбирали на уроке, но тематика должна быть иная. вывести введенные поля в файле server.php.</p></h4>
 
-    <form action="server.php" method="post">
+    <form action="server.php" method="post" enctype="multipart/form-data">
         <label>First Name</label>
         <input type="text" name="firstName" placeholder="Your Name">
         <br>
