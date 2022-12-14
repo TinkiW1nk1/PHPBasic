@@ -1,0 +1,13 @@
+{
+  "name": "php/php",
+  "description": "php",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Public\\": "dz7/public",
+      "Core\\": "dz7/core",
+      "App\\": "dz7/app"
+    }
+  }
+}
