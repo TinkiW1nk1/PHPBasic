@@ -6,7 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Public\\' => array($baseDir . '/dz7/public'),
-    'Core\\' => array($baseDir . '/dz7/core'),
-    'App\\' => array($baseDir . '/dz7/app'),
+    'Public\\' => array($baseDir . '/public'),
+    'Core\\' => array($baseDir . '/core'),
+    'App\\' => array($baseDir . '/app'),
 );
