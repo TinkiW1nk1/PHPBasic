@@ -16,6 +16,7 @@ class Router
             $query[1] = 'home';
         }
 
+
         //создарние обьекта
         $className = '\App\controllers\\' . $this->upperCamelCase($query[1]);
         if(class_exists($className)){
@@ -26,11 +27,18 @@ class Router
         //вызов метода
         if(!empty($query[2])){
             $methodName = $this->lowerCamelCase($query[2]);
+            if(method_exists($classObject, $methodName)){
+                $classObject->$methodName();
+            }else{
+                $methodName = 'index';
+                $classObject->$methodName();
+            }
         }else{
             $methodName = 'index';
+            $classObject->$methodName();
         }
 
-        $classObject->$methodName();
+
 
     }
 
