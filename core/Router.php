@@ -30,8 +30,8 @@ class Router
             if(method_exists($classObject, $methodName)){
                 $classObject->$methodName();
             }else{
-                $methodName = 'index';
-                $classObject->$methodName();
+                $classObject = new Error();
+                $classObject->methodError();
             }
         }else{
             $methodName = 'index';

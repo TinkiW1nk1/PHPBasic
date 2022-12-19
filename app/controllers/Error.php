@@ -8,5 +8,9 @@ class Error
     {
         echo "Class Not found";
     }
+     public function methodError()
+     {
+         echo "Method not found";
+     }
 
 }
