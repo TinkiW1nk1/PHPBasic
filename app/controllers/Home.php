@@ -2,10 +2,16 @@
 
 namespace App\controllers;
 
-class Home
+use App\models\HomeModels;
+use Core\Render;
+
+class Home extends Controller
 {
     public function index()
     {
-        echo "Hi, i am Home, Sweet Home." . "<br>" ;
+
+        $model = new HomeModels();
+        $data = $model->index();
+        Render::render("social/homeView.php", $data);
     }
 }
