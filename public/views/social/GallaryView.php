@@ -8,11 +8,8 @@
 </head>
 <body>
 <p>i a`m Gallary</p>
-<?php foreach ($data as $key => $value) : ?>
-    <?= $key?>
-    <br>
-    <?= $value ?>
-    <br>
+<?php foreach ($data as $key) : ?>
+    <?php debug($key); ?>
 <?php endforeach; ?>
 </body>
 </html>

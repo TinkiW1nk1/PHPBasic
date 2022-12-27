@@ -4,6 +4,10 @@ class GalleryModels
 {
     public function index()
     {
-        return [ 'a', 'b', 'c'];
+        $dbh = new \PDO('mysql:host=localhost;dbname=basic', 'root', 'root');
+        $sth = $dbh->query('SELECT * FROM images');
+        $img = $sth->fetchAll(\PDO::FETCH_ASSOC);
+        return $img;
+
     }
 }

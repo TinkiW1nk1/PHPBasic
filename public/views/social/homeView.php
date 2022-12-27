@@ -14,8 +14,8 @@
     <input type="text" id="lname" name="lname">
     <input type="submit" value="Send">
 </form>
-<?php foreach ($data as $key => $value):?>
-   <p><?= $key ?> - <?= $value ?></p>
+<?php foreach ($data as $key):?>
+    <?php debug($key);?>
 <?php endforeach; ?>
 </body>
 </html>
