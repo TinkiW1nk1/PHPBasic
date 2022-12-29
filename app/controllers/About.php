@@ -2,10 +2,16 @@
 
 namespace App\controllers;
 
-class About
+use App\models\AboutModels;
+use Core\Render;
+
+class About extends Controller
 {
     public function index()
     {
-        echo "I`am about";
+
+        $model = new AboutModels();
+        $data = $model->index();
+        Render::render("social/aboutView.php", $data);
     }
 }

@@ -2,15 +2,15 @@
 
 namespace App\controllers;
 
-class Gallery
+use App\models\GalleryModels;
+use Core\Render;
+
+class Gallery extends Controller
 {
     public function index()
     {
-        echo "This is Gallery";
-    }
-
-    public function get()
-    {
-        echo "Gallery get";
+        $model = new GalleryModels();
+        $data = $model->index();
+        Render::render("social/GallaryView.php", $data);
     }
 }
