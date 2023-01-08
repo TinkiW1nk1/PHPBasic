@@ -10,36 +10,24 @@ class Router
 
     public function run()
     {
-
-        $query = explode('/', $_SERVER['REQUEST_URI']);
-        if( empty($query[1]) ){
-            $query[1] = 'home';
+        $url = !empty($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : '/';
+        $config = require "../conf/routes.php";
+        if( array_key_exists($url, $config) ){
+            $rout = explode('@', $config[$url]);
+            $className = $rout[0];
+            $methodName = $rout[1];
+        }else{
+            $className = 'Error';
+            $methodName = 'methodError';
         }
-
-
-        //создарние обьекта
-        $className = '\App\controllers\\' . $this->upperCamelCase($query[1]);
+        $className = '\App\controllers\\' . $className;
         if(class_exists($className)){
             $classObject = new $className();
         }else{
-            $classObject = new Error();
+            $className = 'Error';
+            $methodName = 'methodError';
         }
-        //вызов метода
-        if(!empty($query[2])){
-            $methodName = $this->lowerCamelCase($query[2]);
-            if(method_exists($classObject, $methodName)){
-                $classObject->$methodName();
-            }else{
-                $classObject = new Error();
-                $classObject->methodError();
-            }
-        }else{
-            $methodName = 'index';
-            $classObject->$methodName();
-        }
-
-
-
+        $classObject->$methodName();
     }
 
     public function lowerCamelCase($str)
