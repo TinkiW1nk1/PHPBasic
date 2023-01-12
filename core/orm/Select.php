@@ -4,48 +4,133 @@ namespace Core\orm;
 
 class Select
 {
-    private DbConector $conect;
-    public string $tableName;
-    public array $fields;
+   private string $tableName;
+   private array $fields = ['*'];
+   private DbConector $conect;
+   private array $join = [];
+   private int $limit;
+   private array $order;
+   private string $group;
 
-    public function __construct($data)
-    {
-        $this->conect = new DbConector();
-        $this->setFields($data);
-    }
-//вернуть результат выборки
-    public function exicute()
-    {
-        $dbh = $this->conect->connect();
-        $sth = $dbh->query($this->buildQuery());
-        $rows = $sth->fetchAll(\PDO::FETCH_ASSOC);
+
+   public function __construct()
+   {
+       $conect = new DbConector();
+       $this->conector = $conect->connect();
+   }
+
+   public function execut(): array
+   {
+        $sql = $this->buildQuery();
+        var_dump($sql);
+        $query = $this->conector->query($sql);
+        $rows = $query->fetchAll(\PDO::FETCH_ASSOC);
         return $rows;
-    }
-//строит строку запроса
-    private function buildQuery(): string
+   }
+
+   public function buildQuery(): string
+   {
+       $sql = "SELECT " . $this->getFieldString() . " FROM " . $this->tableName;
+       if(!empty($this->join)){
+           $sql =  $sql . ' ' . $this->getJoin();
+       }
+       if(!empty($this->limit)){
+           $sql .= ' ' . $this->getLimit();
+       }
+       if(!empty($this->order)){
+           $sql .= ' ' . $this->getOrder();
+       }
+       if(!empty($this->group)){
+           $sql .= ' ' . $this->getGroupBy();
+       }
+       return $sql;
+   }
+
+   public function setTableName(string $name): self
+   {
+       $this->tableName = $name;
+       return $this;
+   }
+
+   public function setFields(array $fields): self
+   {
+       $this->fields = $fields;
+       return $this;
+   }
+
+   public function getFieldString(): string
+   {
+       $result = [];
+       foreach ($this->fields as $key => $field)
+       {
+          $result[] = (is_int($key)) ? $field : $field . 'as' . $key;
+       }
+       return implode(',', $result);
+   }
+
+   public function setJoin(array $join): self
+   {
+       $this->join = $join;
+       return $this;
+   }
+
+   public function getJoin(): string
+   {
+       $result = 'JOIN ';
+       $prefix = ' ';
+       foreach ($this->join as $key => $value){
+
+           $result .= $value . $prefix;
+       }
+       return $result;
+   }
+
+    public function setLimit(int $limit): self
     {
-        $query = '';
-        if (count($this->fields) > 0) {
-            if (!empty($this->fields)) {
-                $query = 'SELECT ' . $this->fields[0];
-            } else {
-                throw new \Exception('Укажите что выбрать!!');
-            }
-            if (!empty($this->fields[1]) && is_string($this->fields[1])) {
-                $query .= ' FROM ' . $this->fields[1];
-            }else{
-                throw new \Exception('Где выбрать?!!!!');
-            }
-            if(!empty($this->fields[2]) && !empty([$this->fields[3]])){
-                $query .= ' WHERE ' . $this->fields[2] . ' = ' . $this->fields[3];
-            }
-        }
-        return $query;
+        $this->limit = $limit;
+        return $this;
     }
 
-    public function setFields($fields = []): void
+    public function getLimit(): string
     {
-        $this->fields = $fields;
+
+        return 'LIMIT ' . $this->limit;
+    }
+
+    public function setOrder(array $order): self
+    {
+        $this->order = $order;
+        return $this;
+    }
+
+    public function getOrder(): string
+    {
+        $format = end($this->order);
+        $order = array_pop($this->order);
+        $result = 'ORDER BY ';
+        $prefix = ' ';
+        $count = 0;
+        foreach ($this->order as $value){
+            if($count != 0){
+                $prefix = ', ';
+            }
+            $count++;
+            $result .= $prefix . $value;
+        }
+        return $result . ' ' . $format;
+    }
+
+    public function setGroup(string $group): self
+    {
+        $this->group = $group;
+        return $this;
+    }
+
+    public function getGroupBy(): string
+    {
+        return "GROUP BY " . $this->group;
     }
 
 }
+
+//  SELECT filed_name as new_name, filed_name1 as new_name1 FROM table ;
