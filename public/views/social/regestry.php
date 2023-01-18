@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<style>
+    <style>
         .navbar {
             overflow: hidden;
             background-color: #333;
@@ -67,29 +65,17 @@
             display: block;
         }
     </style>
-	<title>Home</title>
+    <title>New User</title>
 </head>
 <body>
-
-	<div class="navbar">
-  <a href="\">Home</a>
-  <a href="/gallery">gallery</a>
-  <a href="/Blog">Blog</a>
-  <div class="dropdown">
-    <button class="dropbtn">Add
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-    <a href="/registry">New User</a>
-	<a href="/Blog/add">New Blog</a>
-	<a href="/gallery/add">New Photo</a>
-    </div>
-  </div> 
-</div>
-
-
-<?php foreach ($data as $key):?>
-    <?php debug($key);?>
-<?php endforeach; ?>
+<form action="/registry" method="POST">
+    <label for="name">Name:</label><br>
+    <input type="text" name="name"><br>
+    <label for="email">email:</label><br>
+    <input type="text" name="email">
+    <label for="number">number:</label><br>
+    <input type="number" name="phone">
+    <input type="submit" value="Send">
+</form>
 </body>
 </html>

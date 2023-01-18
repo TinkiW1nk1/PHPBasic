@@ -12,4 +12,7 @@ class Home extends Controller
         $data = $model->index();
         $this->render("social/homeView.php", $data);
     }
+
+
+
 }

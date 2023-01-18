@@ -5,8 +5,8 @@ namespace Core\orm;
 class Select
 {
    private string $tableName;
-   private array $fields = ['*'];
    private DbConector $conect;
+   private array $fields = ['*'];
    private array $join = [];
    private int $limit;
    private array $order;
@@ -19,14 +19,13 @@ class Select
        $this->conector = $conect->connect();
    }
 
-   public function execut(): array
-   {
+    public function execute()
+    {
         $sql = $this->buildQuery();
-        var_dump($sql);
         $query = $this->conector->query($sql);
         $rows = $query->fetchAll(\PDO::FETCH_ASSOC);
         return $rows;
-   }
+    }
 
    public function buildQuery(): string
    {
@@ -34,14 +33,14 @@ class Select
        if(!empty($this->join)){
            $sql =  $sql . ' ' . $this->getJoin();
        }
-       if(!empty($this->limit)){
-           $sql .= ' ' . $this->getLimit();
-       }
        if(!empty($this->order)){
            $sql .= ' ' . $this->getOrder();
        }
        if(!empty($this->group)){
            $sql .= ' ' . $this->getGroupBy();
+       }
+       if(!empty($this->limit)){
+           $sql .= ' ' . $this->getLimit();
        }
        return $sql;
    }
@@ -102,7 +101,7 @@ class Select
         $this->order = $order;
         return $this;
     }
-
+//order by field asc, filed1 desc, field 2 desc
     public function getOrder(): string
     {
         $format = end($this->order);
@@ -133,4 +132,3 @@ class Select
 
 }
 
-//  SELECT filed_name as new_name, filed_name1 as new_name1 FROM table ;
