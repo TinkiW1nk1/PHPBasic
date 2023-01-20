@@ -11,6 +11,8 @@ class HomeModels
     public function index()
     {
         $select = new Select();
-        return $select->setTableName($this->tableName)->execute();
+        return $select->setTableName($this->tableName)
+            ->setWhere([['id','=','3']])
+            ->execute();
     }
 }

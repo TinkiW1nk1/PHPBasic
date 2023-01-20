@@ -1,28 +1,20 @@
 <?php
 
 namespace Core\orm;
-
-class Select
+class Select extends SQL
 {
-   private string $tableName;
-   private DbConector $conect;
+
+
    private array $fields = ['*'];
    private array $join = [];
    private int $limit;
    private array $order;
    private string $group;
 
-
-   public function __construct()
-   {
-       $conect = new DbConector();
-       $this->conector = $conect->connect();
-   }
-
     public function execute()
     {
         $sql = $this->buildQuery();
-        $query = $this->conector->query($sql);
+        $query = $this->connect->query($sql);
         $rows = $query->fetchAll(\PDO::FETCH_ASSOC);
         return $rows;
     }
@@ -32,6 +24,9 @@ class Select
        $sql = "SELECT " . $this->getFieldString() . " FROM " . $this->tableName;
        if(!empty($this->join)){
            $sql =  $sql . ' ' . $this->getJoin();
+       }
+       if(!empty($this->where)){
+           $sql .= ' ' . $this->getWhere();
        }
        if(!empty($this->order)){
            $sql .= ' ' . $this->getOrder();
@@ -43,12 +38,6 @@ class Select
            $sql .= ' ' . $this->getLimit();
        }
        return $sql;
-   }
-
-   public function setTableName(string $name): self
-   {
-       $this->tableName = $name;
-       return $this;
    }
 
    public function setFields(array $fields): self

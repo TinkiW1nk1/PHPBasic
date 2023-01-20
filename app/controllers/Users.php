@@ -9,8 +9,10 @@ class Users extends Controller
 {
     public function addUser()
     {
-        $model = new UserModels();
-        $data = $model->addUser($_POST);
+        if(!empty($_POST)){
+            $model = new UserModels();
+            $data = $model->addUser($_POST);
+        }
         Render::render("social/regestry.php");
     }
 }
