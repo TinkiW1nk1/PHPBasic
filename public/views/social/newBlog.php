@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<style>
+    <style>
         .navbar {
             overflow: hidden;
             background-color: #333;
@@ -67,29 +65,19 @@
             display: block;
         }
     </style>
-	<title>Home</title>
+    <title>New Post</title>
 </head>
 <body>
+<form action="/Blog/add" method="POST">
+    <label for="Name">Name:</label><br>
+    <input type="text" name="name"><br>
 
-	<div class="navbar">
-  <a href="\">Home</a>
-  <a href="/gallery">gallery</a>
-  <a href="/Blog">Blog</a>
-  <div class="dropdown">
-    <button class="dropbtn">Add
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-    <a href="/registry">New User</a>
-	<a href="/Blog/add">New Blog</a>
-	<a href="/gallery/add">New Photo</a>
-    </div>
-  </div> 
-</div>
+    <label for="author_id">author_id:</label><br>
+    <input type="text" name="author_id"><br>
 
-
-<?php foreach ($data as $key):?>
-    <?php debug($key);?>
-<?php endforeach; ?>
+    <label for="text">Text</label><br>
+    <input type="text" name="text"><br>
+    <input type="submit" value="Send">
+</form>
 </body>
 </html>

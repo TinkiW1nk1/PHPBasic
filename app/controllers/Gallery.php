@@ -13,4 +13,12 @@ class Gallery extends Controller
         $data = $model->index();
         Render::render("social/GallaryView.php", $data);
     }
+
+    public function addPhoto()
+    {
+        $model = new GalleryModels();
+        //$data = $model->addPhoto($_POST);
+        $data = $model->add('gallery', $_POST);
+        Render::render("social/newPhoto.php");
+    }
 }

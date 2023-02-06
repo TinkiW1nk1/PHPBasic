@@ -1,32 +1,23 @@
 <?php
 
 namespace Core\orm;
-
-class Select
+class Select extends SQL
 {
-   private string $tableName;
+
+
    private array $fields = ['*'];
-   private DbConector $conect;
    private array $join = [];
    private int $limit;
    private array $order;
    private string $group;
 
-
-   public function __construct()
-   {
-       $conect = new DbConector();
-       $this->conector = $conect->connect();
-   }
-
-   public function execut(): array
-   {
+    public function execute()
+    {
         $sql = $this->buildQuery();
-        var_dump($sql);
-        $query = $this->conector->query($sql);
+        $query = $this->connect->query($sql);
         $rows = $query->fetchAll(\PDO::FETCH_ASSOC);
         return $rows;
-   }
+    }
 
    public function buildQuery(): string
    {
@@ -34,8 +25,8 @@ class Select
        if(!empty($this->join)){
            $sql =  $sql . ' ' . $this->getJoin();
        }
-       if(!empty($this->limit)){
-           $sql .= ' ' . $this->getLimit();
+       if(!empty($this->where)){
+           $sql .= ' ' . $this->getWhere();
        }
        if(!empty($this->order)){
            $sql .= ' ' . $this->getOrder();
@@ -43,13 +34,10 @@ class Select
        if(!empty($this->group)){
            $sql .= ' ' . $this->getGroupBy();
        }
+       if(!empty($this->limit)){
+           $sql .= ' ' . $this->getLimit();
+       }
        return $sql;
-   }
-
-   public function setTableName(string $name): self
-   {
-       $this->tableName = $name;
-       return $this;
    }
 
    public function setFields(array $fields): self
@@ -102,7 +90,7 @@ class Select
         $this->order = $order;
         return $this;
     }
-
+//order by field asc, filed1 desc, field 2 desc
     public function getOrder(): string
     {
         $format = end($this->order);
@@ -133,4 +121,3 @@ class Select
 
 }
 
-//  SELECT filed_name as new_name, filed_name1 as new_name1 FROM table ;

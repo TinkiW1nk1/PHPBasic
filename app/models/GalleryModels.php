@@ -1,13 +1,23 @@
 <?php
 namespace App\models;
-class GalleryModels
+use Core\orm\Insert;
+use Core\orm\Select;
+
+class GalleryModels extends Model
 {
+    private string $tableName = 'gallery';
     public function index()
     {
-        $dbh = new \PDO('mysql:host=localhost;dbname=basic', 'root', 'root');
-        $sth = $dbh->query('SELECT * FROM images');
-        $img = $sth->fetchAll(\PDO::FETCH_ASSOC);
-        return $img;
+        $select = new Select();
+        return $select->setTableName($this->tableName)->execute();
 
+    }
+
+    public function addPhoto(array $data)
+    {
+        if(!empty($data)){
+            $new = new Insert();
+            $new->setTableName($this->tableName)->setData($data)->execute();
+        }
     }
 }
